@@ -58,10 +58,13 @@ Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swagger
 ## Support correct incusd path
 ### From: https://github.com/lxc/incus/pull/799
 Patch0001:      0001-cmd-incus-admin_cluster-Add-libexec-path-for-incusd.patch
+## Support /run/incus
+### From: https://github.com/lxc/incus/pull/800
+Patch0002:      0001-client-connection-Add-support-for-the-socket-existin.patch
 
 # Downstream only patches
 ## Allow offline builds
-Patch1001:         incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
+Patch1001:      incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
 
 %global bashcompletiondir %(pkg-config --variable=completionsdir bash-completion 2>/dev/null || :)
 %global selinuxtype targeted
@@ -470,6 +473,7 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 * Sat Apr 27 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.0.0-1
 - Update to 6.0.0
 - Move libexec content to libexecdir
+- Move sockets to rundir
 
 * Wed Mar 27 2024 Neal Gompa <ngompa@fedoraproject.org> - 0.7-1
 - Update to 0.7

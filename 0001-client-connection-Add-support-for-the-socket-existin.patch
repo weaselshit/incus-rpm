@@ -1,0 +1,44 @@
+From bac712576069204618f642ef5ed3d8be942864b4 Mon Sep 17 00:00:00 2001
+From: Neal Gompa <neal@gompa.dev>
+Date: Sat, 27 Apr 2024 10:01:14 -0400
+Subject: [PATCH] client/connection: Add support for the socket existing in
+ /run/incus
+
+Transient sockets are supposed to be in /run rather than /var, so make
+it possible to detect that automatically when used.
+
+Signed-off-by: Neal Gompa <neal@gompa.dev>
+---
+ client/connection.go | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/client/connection.go b/client/connection.go
+index 01be07685..2792ccbe4 100644
+--- a/client/connection.go
++++ b/client/connection.go
+@@ -157,7 +157,8 @@ func ConnectIncusUnix(path string, args *ConnectionArgs) (InstanceServer, error)
+ //
+ // If the path argument is empty, then $INCUS_SOCKET will be used, if
+ // unset $INCUS_DIR/unix.socket will be used and if that one isn't set
+-// either, then the path will default to /var/lib/incus/unix.socket.
++// either, then the path will default to /run/incus/unix.socket or
++// /var/lib/incus/unix.socket.
+ func ConnectIncusUnixWithContext(ctx context.Context, path string, args *ConnectionArgs) (InstanceServer, error) {
+ 	logger.Debug("Connecting to a local Incus over a Unix socket")
+ 
+@@ -180,7 +181,11 @@ func ConnectIncusUnixWithContext(ctx context.Context, path string, args *Connect
+ 		if path == "" {
+ 			incusDir := os.Getenv("INCUS_DIR")
+ 			if incusDir == "" {
+-				incusDir = "/var/lib/incus"
++				if util.PathExists("/run/incus") {
++					incusDir = "/run/incus"
++				} else {
++					incusDir = "/var/lib/incus"
++				}
+ 			}
+ 
+ 			path = filepath.Join(incusDir, "unix.socket")
+-- 
+2.44.0
+
