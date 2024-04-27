@@ -57,7 +57,6 @@ Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swagger
 # Allow offline builds
 Patch0:         incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
 
-%global incuslibdir %{_prefix}/lib/incus
 %global bashcompletiondir %(pkg-config --variable=completionsdir bash-completion 2>/dev/null || :)
 %global selinuxtype targeted
 
@@ -141,8 +140,7 @@ This package contains the Incus daemon.
 %{_unitdir}/%{name}-startup.service
 %{_unitdir}/%{name}-user.socket
 %{_unitdir}/%{name}-user.service
-%dir %{incuslibdir}
-%{incuslibdir}/*
+%{_libexecdir}/%{name}/
 %{_sysusersdir}/%{name}.conf
 %{_tmpfilesdir}/%{name}.conf
 %{_mandir}/man1/incusd*.1.*
@@ -422,9 +420,9 @@ install -D -m0644 -vp %{SOURCE109} %{buildroot}%{_sysctldir}/10-incus-inotify.co
 install -D -m0644 -vp selinux/%{name}.pp.bz2 %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{name}.pp.bz2
 
 # install helper libs
-install -d %{buildroot}%{incuslibdir}
-install -m0755 -vp %{SOURCE110} %{buildroot}%{incuslibdir}/
-install -m0755 -vp %{gobuilddir}/lib/* %{buildroot}%{incuslibdir}/
+install -d %{buildroot}%{_libexecdir}/%{name}
+install -m0755 -vp %{SOURCE110} %{buildroot}%{_libexecdir}/%{name}/
+install -m0755 -vp %{gobuilddir}/lib/* %{buildroot}%{_libexecdir}/%{name}/
 
 # install manpages
 install -d %{buildroot}%{_mandir}/man1
@@ -465,6 +463,7 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 %changelog
 * Sat Apr 27 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.0.0-1
 - Update to 6.0.0
+- Move libexec content to libexecdir
 
 * Wed Mar 27 2024 Neal Gompa <ngompa@fedoraproject.org> - 0.7-1
 - Update to 0.7
