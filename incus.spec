@@ -54,8 +54,14 @@ Source201:      %{swaggerui_source_baseurl}/swagger-ui-bundle.js#/swagger-ui-%{s
 Source202:      %{swaggerui_source_baseurl}/swagger-ui-standalone-preset.js#/swagger-ui-%{swaggerui_version}-standalone-preset.js
 Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swaggerui_version}.css
 
-# Allow offline builds
-Patch0:         incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
+# Patches upstream or proposed upstream
+## Support correct incusd path
+### From: https://github.com/lxc/incus/pull/799
+Patch0001:      0001-cmd-incus-admin_cluster-Add-libexec-path-for-incusd.patch
+
+# Downstream only patches
+## Allow offline builds
+Patch1001:         incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
 
 %global bashcompletiondir %(pkg-config --variable=completionsdir bash-completion 2>/dev/null || :)
 %global selinuxtype targeted

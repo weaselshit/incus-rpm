@@ -1,0 +1,32 @@
+From 2a84aa00ddab35647636eeedbcf2dbd6c27577cc Mon Sep 17 00:00:00 2001
+From: Neal Gompa <neal@gompa.dev>
+Date: Sat, 27 Apr 2024 09:20:35 -0400
+Subject: [PATCH] cmd/incus/admin_cluster: Add libexec path for incusd
+
+This is where incusd is installed on Fedora Linux and derivatives,
+and potentially other distributions that use /usr/libexec for non-path
+executables.
+
+Signed-off-by: Neal Gompa <neal@gompa.dev>
+---
+ cmd/incus/admin_cluster.go | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/incus/admin_cluster.go b/cmd/incus/admin_cluster.go
+index a54bc4f26..b03946cd2 100644
+--- a/cmd/incus/admin_cluster.go
++++ b/cmd/incus/admin_cluster.go
+@@ -33,7 +33,9 @@ func (c *cmdAdminCluster) Run(cmd *cobra.Command, args []string) {
+ 	env := getEnviron()
+ 	path, _ := exec.LookPath("incusd")
+ 	if path == "" {
+-		if util.PathExists("/usr/lib/incus/incusd") {
++		if util.PathExists("/usr/libexec/incus/incusd") {
++			path = "/usr/libexec/incus/incusd"
++		} else if util.PathExists("/usr/lib/incus/incusd") {
+ 			path = "/usr/lib/incus/incusd"
+ 		} else if util.PathExists("/opt/incus/bin/incusd") {
+ 			path = "/opt/incus/bin/incusd"
+-- 
+2.44.0
+
