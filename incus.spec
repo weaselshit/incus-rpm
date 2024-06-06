@@ -10,7 +10,7 @@
 
 # https://github.com/lxc/incus
 %global goipath github.com/lxc/incus
-Version:        6.1.0
+Version:        6.2
 
 %gometa
 
@@ -22,7 +22,7 @@ Release:        1%{?dist}
 Summary:        Powerful system container and virtual machine manager
 License:        Apache-2.0
 URL:            https://linuxcontainers.org/incus
-Source0:        https://linuxcontainers.org/downloads/%{name}/%{name}-v%{version}.tar.xz
+Source0:        https://linuxcontainers.org/downloads/%{name}/%{name}-%{version}.tar.xz
 
 # Systemd units
 Source101:      %{name}.socket
@@ -55,12 +55,6 @@ Source202:      %{swaggerui_source_baseurl}/swagger-ui-standalone-preset.js#/swa
 Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swaggerui_version}.css
 
 # Patches upstream or proposed upstream
-## Support correct incusd path
-### From: https://github.com/lxc/incus/pull/799
-Patch0001:      0001-cmd-incus-admin_cluster-Add-libexec-path-for-incusd.patch
-## Support /run/incus
-### From: https://github.com/lxc/incus/pull/800
-Patch0002:      0001-client-connection-Add-support-for-the-socket-existin.patch
 
 # Downstream only patches
 ## Allow offline builds
@@ -470,6 +464,9 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 %gopkgfiles
 
 %changelog
+* Thu Jun 06 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.2-1
+- Update to 6.2
+
 * Thu May 16 2024 Fabian Mettler <dev@maveonair.com> - 6.1.0-1
 - Update to 6.1.0
 
