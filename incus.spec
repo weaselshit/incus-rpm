@@ -55,6 +55,8 @@ Source202:      %{swaggerui_source_baseurl}/swagger-ui-standalone-preset.js#/swa
 Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swaggerui_version}.css
 
 # Patches upstream or proposed upstream
+## Fix build for 32-bit arches
+Patch0001:      https://github.com/lxc/incus/commit/f11c0b04f2e90a19e900ca077e21edf02c589db2.patch
 
 # Downstream only patches
 ## Allow offline builds
