@@ -18,7 +18,7 @@ Version:        6.2
 %global golicenses COPYING
 
 Name:           incus
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Powerful system container and virtual machine manager
 License:        Apache-2.0
 URL:            https://linuxcontainers.org/incus
@@ -109,8 +109,6 @@ Incus offers a REST API to remotely manage containers over the network,
 using an image based work-flow and with support for live migration.
 
 This package contains the Incus daemon.
-
-%godevelpkg
 
 %pre
 %sysusers_create_package %{name} %{SOURCE106}
@@ -401,8 +399,6 @@ bzip2 -9 %{name}.pp
 popd
 
 %install
-%gopkginstall
-
 # install binaries
 install -d %{buildroot}%{_bindir}
 install -m0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
@@ -462,10 +458,10 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
     -d %{goipath}/cmd/lxc-to-incus  # lxc-to-incus test fails, see ganto/copr-lxc4#23
 %endif
 
-# This needs to be at the end to evaluate correctly
-%gopkgfiles
-
 %changelog
+* Tue Jul 02 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.2-2
+- Drop devel subpackage
+
 * Thu Jun 06 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.2-1
 - Update to 6.2
 
