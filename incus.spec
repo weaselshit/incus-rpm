@@ -18,7 +18,7 @@ Version:        6.2
 %global golicenses COPYING
 
 Name:           incus
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Powerful system container and virtual machine manager
 License:        Apache-2.0
 URL:            https://linuxcontainers.org/incus
@@ -459,6 +459,9 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 %endif
 
 %changelog
+* Thu Jul 18 2024 Fedora Release Engineering <releng@fedoraproject.org> - 6.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
+
 * Tue Jul 02 2024 Neal Gompa <ngompa@fedoraproject.org> - 6.2-2
 - Drop devel subpackage
 
