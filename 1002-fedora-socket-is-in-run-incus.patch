@@ -1,0 +1,34 @@
+From 56f01aecc28a19ba1418ee418a83914ab079b6e2 Mon Sep 17 00:00:00 2001
+From: Neil Hanlon <neil@shrug.pw>
+Date: Tue, 20 Aug 2024 19:54:56 -0400
+Subject: [PATCH] fedora socket is in /run/incus
+
+---
+ cmd/lxd-to-incus/targets_systemd.go | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmd/lxd-to-incus/targets_systemd.go b/cmd/lxd-to-incus/targets_systemd.go
+index fb57a14..eb5d239 100644
+--- a/cmd/lxd-to-incus/targets_systemd.go
++++ b/cmd/lxd-to-incus/targets_systemd.go
+@@ -3,7 +3,7 @@ package main
+ import (
+ 	"time"
+ 
+-	"github.com/lxc/incus/v6/client"
++	incus "github.com/lxc/incus/v6/client"
+ 	"github.com/lxc/incus/v6/shared/subprocess"
+ 	"github.com/lxc/incus/v6/shared/util"
+ )
+@@ -37,7 +37,7 @@ func (s *targetSystemd) start() error {
+ }
+ 
+ func (s *targetSystemd) connect() (incus.InstanceServer, error) {
+-	return incus.ConnectIncusUnix("/var/lib/incus/unix.socket", &incus.ConnectionArgs{SkipGetServer: true})
++	return incus.ConnectIncusUnix("/run/incus/unix.socket", &incus.ConnectionArgs{SkipGetServer: true})
+ }
+ 
+ func (s *targetSystemd) paths() (*daemonPaths, error) {
+-- 
+2.46.0
+

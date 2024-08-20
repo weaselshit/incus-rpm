@@ -18,7 +18,7 @@ Version:        6.4
 %global golicenses COPYING
 
 Name:           incus
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Powerful system container and virtual machine manager
 License:        Apache-2.0
 URL:            https://linuxcontainers.org/incus
@@ -59,6 +59,7 @@ Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swagger
 # Downstream only patches
 ## Allow offline builds
 Patch1001:      incus-0.2-doc-Remove-downloads-from-sphinx-build.patch
+Patch1002:      1002-fedora-socket-is-in-run-incus.patch
 
 %global bashcompletiondir %(pkg-config --variable=completionsdir bash-completion 2>/dev/null || :)
 %global selinuxtype targeted
@@ -457,6 +458,9 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 %endif
 
 %changelog
+* Tue Aug 20 2024 Neil Hanlon <neil@shrug.pw> - 6.4-4
+- patch to use the right socket for lxd-to-incux
+
 * Tue Aug 20 2024 Neil Hanlon <neil@shrug.pw> - 6.4-3
 - rebuild with systemd socket change
 
