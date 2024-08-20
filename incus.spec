@@ -18,7 +18,7 @@ Version:        6.4
 %global golicenses COPYING
 
 Name:           incus
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Powerful system container and virtual machine manager
 License:        Apache-2.0
 URL:            https://linuxcontainers.org/incus
@@ -55,10 +55,6 @@ Source202:      %{swaggerui_source_baseurl}/swagger-ui-standalone-preset.js#/swa
 Source203:      %{swaggerui_source_baseurl}/swagger-ui.css#/swagger-ui-%{swaggerui_version}.css
 
 # Patches upstream or proposed upstream
-%if ! 0%{?fedora} && 0%{?rhel} >= 8
-## Fix build for 32-bit arches
-Patch0001:      https://github.com/lxc/incus/commit/f11c0b04f2e90a19e900ca077e21edf02c589db2.patch
-%endif
 
 # Downstream only patches
 ## Allow offline builds
@@ -461,6 +457,8 @@ export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
 %endif
 
 %changelog
+* Tue Aug 20 2024 Neil Hanlon <neil@shrug.pw> - 6.4-3
+- rebuild with systemd socket change
 
 * Tue Aug 20 2024 Neil Hanlon <neil@shrug.pw> - 6.4-2
 - rebuild
