@@ -346,10 +346,10 @@ for cmd in incus fuidshift incus-benchmark lxc-to-incus lxd-to-incus; do
     BUILDTAGS="libsqlite3" %gobuild -o %{gobuilddir}/bin/$cmd %{goipath}/cmd/$cmd
 done
 
-#export CGO_ENABLED=0
-BUILDTAGS="netgo" %gobuild -o %{gobuilddir}/bin/incus-migrate %{goipath}/cmd/incus-migrate
-BUILDTAGS="agent netgo" %gobuild -o %{gobuilddir}/bin/incus-agent %{goipath}/cmd/incus-agent
-#unset CGO_ENABLED
+export CGO_ENABLED=0
+BUILDTAGS="netgo" %gobuild  -ldflags '-extldflags "-static"' -o %{gobuilddir}/bin/incus-migrate %{goipath}/cmd/incus-migrate
+BUILDTAGS="agent netgo" %gobuild  -ldflags '-extldflags "-static"' -o %{gobuilddir}/bin/incus-agent %{goipath}/cmd/incus-agent
+unset CGO_ENABLED
 
 # build shell completions
 mkdir %{gobuilddir}/completions
